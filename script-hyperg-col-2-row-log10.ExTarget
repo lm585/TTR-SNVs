@@ -1,0 +1,29 @@
+##
+awk 'BEGIN{
+ OFS = "\t";
+ ORS = "";
+ }
+ {
+  if($1 ~ /e-/)
+    logv = 0;
+  else
+    logv = $1;
+
+  if($1 ~ /-Inf/)
+    logv = -99999999;
+
+  if(NR % 2 == 1)
+  {
+   dep=logv;
+  }
+  else
+  {
+   if(logv > dep) # depleted, p-value=e-50, loh10p= -49, output as negative value
+     print dep "\t";
+   else  ## over-represented , p-value=e-50, loh10p= -49, output as positive value
+     print (-1.0)*logv  "\t";
+  }
+  if(NR % (7 * 2) == 0)
+    print "\n";
+ }
+    '  $1 ##  temp.dec.allele.log-p.26popu
