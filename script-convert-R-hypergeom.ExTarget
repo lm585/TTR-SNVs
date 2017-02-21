@@ -1,0 +1,56 @@
+#ExAC input file
+1       Chrom   18
+2       Position        29171879
+3       RSID    rs138657343
+4       Reference       G
+5       Alternate       A
+6       Consequence     p.Arg5His
+7       Protein Consequence     p.Arg5His
+8       Transcript Consequence  c.14G>A
+9       Filter  PASS
+10      Annotation      missense
+11      Flags
+12      Allele Count    13
+13      Allele Number   121404
+14      Number of Homozygotes   0
+15      Allele Frequency        0.0001071
+16      Allele Count African    1
+17      Allele Number African   10406
+18      Homozygote Count African        0
+19      Allele Count East Asian 0
+20      Allele Number East Asian        8654
+21      Homozygote Count East Asian     0
+22      Allele Count European (Non-Finnish)     10
+23      Allele Number European (Non-Finnish)    66736
+24      Homozygote Count European (Non-Finnish) 0
+25      Allele Count Finnish    2
+26      Allele Number Finnish   6614
+27      Homozygote Count Finnish        0
+28      Allele Count Latino     0
+29      Allele Number Latino    11576
+30      Homozygote Count Latino 0
+31      Allele Count Other      0
+32      Allele Number Other     908
+33      Homozygote Count Other  0
+34      Allele Count South Asian        0
+35      Allele Number South Asian       16510
+36      Homozygote Count South Asian    0
+
+#
+#
+
+awk '
+    BEGIN {FS = "\t"; OFS = "\t"}
+    {
+
+ print "N = ",$13;
+ print "r = ", $12;
+ for(i = 16 ; i <= 34; i = i+3) ##
+ {
+  print "n = ", $(i+1);
+  print "y = ", $i;
+  print "log10(sum(dhyper(0:y,r,N-r,n)))";
+  print "log10(sum(dhyper(y:n,r,N-r,n)))";
+ }
+     }' $1 # ExTarget allele freq file
+
