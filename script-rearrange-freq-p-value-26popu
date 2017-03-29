@@ -1,0 +1,25 @@
+#
+
+awk 'NR < 4' temp-7snv-transposed-raw
+
+awk '$1 == "population" && $2 != "ALL"' temp-7snv-transposed-raw | cut -f 2 > temp-26-popu
+cat temp-26-popu | while read popu
+do
+  grep "	$popu	$popu	" temp-7snv-transposed-raw -A 4 | head -5
+  a=`grep "^$popu	" temp-7snv-transposed-raw  | wc -l`
+  if [ $a -eq 1 ]
+  then
+    grep "^$popu	" temp-7snv-transposed-raw
+  elif [ $a -gt 1 ]
+  then
+    echo grep "^$popu	" temp-7snv-transposed-raw
+    echo "$popu has multiple hits for p-value block"
+    exit 1
+  else
+    echo "$popu has no hits for p-value block"
+    exit 1
+  fi
+done
+rm temp-26-popu
+
+awk 'NR >= 134 && NR <= 138' temp-7snv-transposed-raw
