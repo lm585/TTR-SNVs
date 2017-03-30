@@ -1,0 +1,24 @@
+#
+
+awk 'NR < 4' temp-7snv-transposed-freq-then-p-value
+
+awk 'NR >= 160 && NR <= 164' temp-7snv-transposed-freq-then-p-value
+
+cat  temp-popu-group-by-cont | while read popu
+do
+  grep "population	$popu	$popu	" temp-7snv-transposed-freq-then-p-value -A 4 | head -5
+  grep "population	$popu	$popu	" temp-7snv-transposed-freq-then-p-value -A 5 | awk '
+    BEGIN {FS = "\t"; OFS = "\t"; ORS = ""}
+   NR == 6 {
+    print "enrichment/depletion p-value	";
+    for(i = 2; i <= NF; i++)
+    {
+     if(i == NF)
+       print $i "\n";
+     else
+       print $i "\t";
+    }
+    }
+    '
+done
+
