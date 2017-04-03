@@ -1,0 +1,37 @@
+#
+#
+rm temp
+for popu in `echo "ACB	ASW	BEB	CDX	CEU	CHB	CHS	CLM	ESN	FIN	GBR	GIH	GWD	IBS	ITU	JPT	KHV	LWK	MSL	MXL	PEL	PJL	PUR	STU	TSI	YRI" `
+do
+  a=`grep "^$popu	" 1000-genome-26popu-contin | wc -l`
+  if [ $a -eq 1 ]
+  then
+    cont=`grep "^$popu	" 1000-genome-26popu-contin | cut -f 2`
+    echo -n "$cont	"
+    if [ "$cont" = "AFR" ]
+    then
+      echo -n "1	" >> temp
+    elif [ "$cont" = "AMR" ]
+    then
+      echo -n "5	" >> temp
+    elif [ "$cont" = "EAS" ]
+    then
+      echo -n "2	" >> temp
+    elif [ "$cont" = "EUR" ]
+    then
+      echo -n "4	" >> temp
+    elif [ "$cont" = "SAS" ]
+    then
+      echo -n "3	" >> temp
+    else
+      t=1
+    fi
+  else
+    echo "$popu has 0 or >1 matches"
+  fi 
+done
+
+echo
+cat temp
+echo
+rm temp
