@@ -1,0 +1,48 @@
+#
+#
+
+rm temp2
+
+for id in `echo "rs1800458	rs28933979	rs138065384	rs121918074	rs148538950	rs121918095	rs28933981	rs76992529	rs144965179	rs536294863	rs143948820" `
+do
+  awk '$3 == "'$id'" '  TTR-ExAC-snp-with-enrich-dep-P.txt > temp
+  a=`cat temp | wc -l`
+  if [ $a -eq 1 ]
+  then
+    cat temp >> temp2 
+  else
+    echo "$id has 0 or >1 hits"
+  fi
+done
+
+awk '
+BEGIN {FS = "\t"; OFS = "\t"; }
+{
+ fs = 0;
+  n = 0;
+  sa = 0;
+  sb = 0;
+ for(i = 16; i < 35; i = i+3)
+ {
+  a = $i / $(i+1);
+  b = 1 - a;
+  fs = fs + 2 * a * b ;
+  sa = sa + a;
+  sb = sb + b;
+  n++;
+ }
+ fs /= n; #average of sub-popu heterozygosity
+ a = sa / n;
+ b = sb / n;
+ ft = 2 * a * b ; #total popu heterozyg
+ if(ft != 0)
+ {
+  fst = (ft - fs) / ft;
+  print $3, n, fs, ft, fst;
+ }
+ else
+ {
+  print $1, " ft == 0, no SNP";
+ }
+}' temp2
+
