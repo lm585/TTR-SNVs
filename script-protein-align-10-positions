@@ -1,0 +1,10 @@
+#
+for pos in 26	50	64	110	123	124	139	142	144	146
+do
+   echo "amino acid $pos"
+   multi-protein-align-get-segment.2   TTR-protein-taxon  TTR-protein-align-blocks out637pm 3 $pos 5 > temp637pm
+   cat out637pm
+   echo
+done
+
+rm out637pm
