@@ -188,7 +188,7 @@ int main(int argc, char *argv[])
    for(int i = 0; i < str1.length(); i++)
    {
     matrix[k % numOfProt].cell.push_back(str1[i]);
-    if(k % numOfProt == 1)
+    if(k % numOfProt == 0)
     {
      if(aaPos.size() == 0)
      {
