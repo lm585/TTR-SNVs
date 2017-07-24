@@ -1,0 +1,23 @@
+#head  temp-obes-gwas-snps2-column
+#Study
+#(PMID: 25760438)
+#(PMID: 25760438)
+#
+#head  obes-29GWAS-PMID-popu
+#(PMID: 23563607)        2013    European
+#(PMID: 20966902)        2010    South-Asian
+#(PMID: 21544081)        2011    Multiple populations
+#
+
+cat temp-obes-gwas-snps2-column | while read ll
+do
+  f=`grep "^$ll	" obes-29GWAS-PMID-popu | cut -f 3 | wc -l`
+  p=`grep "^$ll	" obes-29GWAS-PMID-popu | head -1 | cut -f 3`
+  if [ $f -eq 1 ]
+  then
+    echo $p
+  else
+    echo "$ll has 0 or >1 hits"
+  fi
+done
+
