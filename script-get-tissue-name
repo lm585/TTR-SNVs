@@ -1,0 +1,17 @@
+#
+#for the sample ID 'GTEX-1445S-1126-SM-5QGOW'
+#find tissue (e.g. "Muscle - Skeletal")
+
+awk 'NR == 1'  TTR-GTEx-rpkm | awk 'BEGIN{FS = "\t"} {for(i = 1; i <= NF; i++) print  $i}' | while read ll
+do
+ a=`grep "^$ll	"  GTEx_Data_V6_Annotations_SampleAttributesDS.colum1_7.txt | wc -l`
+ if [ $a -eq 1 ]
+ then
+   tissue=`grep "^$ll	"  GTEx_Data_V6_Annotations_SampleAttributesDS.colum1_7.txt | cut -f 2`
+   echo -n "$tissue	"
+ else
+   echo -n "$ll	"
+ fi
+done
+
+echo
