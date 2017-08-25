@@ -1,6 +1,10 @@
-#
+#GTEx-rpkm
 #for the sample ID 'GTEX-1445S-1126-SM-5QGOW'
 #find tissue (e.g. "Muscle - Skeletal")
+#Name    Description     Adipose - Subcutaneous  Adipose - Subcutaneous  Adipose - Subcutaneous  Adipose - Subcutaneous  Adipose - Subcutaneous  Adipose - Subcutaneous
+#Name    Description     GTEX-111CU-1826-SM-5GZYN        GTEX-111FC-0226-SM-5N9B8        GTEX-111VG-2326-SM-5N9BK        GTEX-111YS-2426-SM-5GZZQ        GTEX-1122O-2026-SM-5NQ91        GTEX-1128S-2126-SM-5H12U
+#ENSG00000118271.5       TTR     0       0.0905443206429482      0.276853531599045       0.0423235297203064      0.286031156778336       0.133610323071480
+
 
 awk 'NR == 1'  TTR-GTEx-rpkm | awk 'BEGIN{FS = "\t"} {for(i = 1; i <= NF; i++) print  $i}' | while read ll
 do
