@@ -1,0 +1,21 @@
+#
+#
+rm temp-GTEx-53-tiss-columns
+a=1
+
+cat TTR-GTEx-53-tissues | while read ll
+do
+  echo "$ll" > temp-$$
+  grep "^$ll	"  TTR-GTEx-rpkm.transposed | cut -f 3 >> temp-$$
+  if [ $a -eq 1 ]
+  then
+    a=`expr $a + 1`
+    cat temp-$$ > temp-GTEx-53-tiss-columns
+  else
+    paste temp-GTEx-53-tiss-columns temp-$$ > out
+    mv  out  temp-GTEx-53-tiss-columns
+  fi
+done
+
+rm temp-$$ out
+wc -l  temp-GTEx-53-tiss-columns
