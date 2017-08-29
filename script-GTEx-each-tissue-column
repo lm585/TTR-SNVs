@@ -1,5 +1,9 @@
 #
 #
+the script has semantic bug
+The error happens when a later column has more number of elements than previous columns
+Use new version of the script
+
 rm temp-GTEx-53-tiss-columns
 a=1
 
