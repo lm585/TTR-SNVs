@@ -1,0 +1,17 @@
+#
+#
+rm temp-GTEx-53-tiss-columns
+rm temp-8282017-*
+a=1
+
+cat TTR-GTEx-53-tissues |  while read ll
+do
+  echo "$ll" > temp-8282017-$a
+  grep "^$ll	"  TTR-GTEx-rpkm.transposed | cut -f 3 >> temp-8282017-$a
+  a=`expr $a + 1`
+done
+
+wc -l temp-8282017-*
+paste temp-8282017-*  > temp-GTEx-53-tiss-columns
+wc -l  temp-GTEx-53-tiss-columns
+rm temp-8282017-*
